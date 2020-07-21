@@ -11,6 +11,10 @@ public class NativeRender {
         System.loadLibrary("native_lib");
     }
 
+    public native void nInit();
+
+    public native void nUnInit();
+
     public native void nSurfaceCreated();
 
     public native void nSurfaceChanged(int width,int height);
