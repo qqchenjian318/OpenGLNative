@@ -15,6 +15,8 @@ public class NativeRender {
 
     public native void nUnInit();
 
+    public native void setImageData(int format,int width,int height,byte[] bytes);
+
     public native void nSurfaceCreated();
 
     public native void nSurfaceChanged(int width,int height);

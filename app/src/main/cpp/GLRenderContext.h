@@ -7,7 +7,7 @@
 #define OPENGLNATIVE_GLRENDERCONTEXT_H
 
 
-#include "TriangleSample.h"
+#include "sample/TriangleSample.h"
 
 class GLRenderContext {
     GLRenderContext();
@@ -15,6 +15,8 @@ class GLRenderContext {
     ~GLRenderContext();
 
 public:
+    void setImageData(int format,int width,int height,uint8_t *pData);
+
     void onSurfaceCreated();
 
     void onSurfaceChanged(int width,int height);

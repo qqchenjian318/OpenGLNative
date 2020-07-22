@@ -18,6 +18,18 @@ Java_com_viddup_openglnative_render_NativeRender_nUnInit(JNIEnv *env, jobject th
 }
 
 JNIEXPORT void JNICALL
+Java_com_viddup_openglnative_render_NativeRender_setImageData(JNIEnv *env, jobject thiz,
+                                                              jint format, jint width, jint height,
+                                                              jbyteArray bytes) {
+    int len = env->GetArrayLength(bytes);
+    auto* buf = new uint8_t[len];
+    env->GetByteArrayRegion(bytes, 0, len, reinterpret_cast<jbyte*>(buf));
+    GLRenderContext::getInstance()->setImageData(format,width,height,buf);
+    delete[] buf;
+    env->DeleteLocalRef(bytes);
+}
+
+JNIEXPORT void JNICALL
 Java_com_viddup_openglnative_render_NativeRender_nSurfaceCreated(JNIEnv *env, jobject instance) {
     GLRenderContext::getInstance()->onSurfaceCreated();
 }
@@ -25,7 +37,7 @@ Java_com_viddup_openglnative_render_NativeRender_nSurfaceCreated(JNIEnv *env, jo
 JNIEXPORT void JNICALL
 Java_com_viddup_openglnative_render_NativeRender_nSurfaceChanged(JNIEnv *env, jobject thiz,
                                                                  jint width, jint height) {
-    GLRenderContext::getInstance()->onSurfaceChanged(width,height);
+    GLRenderContext::getInstance()->onSurfaceChanged(width, height);
 }
 
 JNIEXPORT void JNICALL

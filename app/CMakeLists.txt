@@ -13,9 +13,20 @@ set(LIB_HOME ${CMAKE_SOURCE_DIR}/libs)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-include_directories(src/main/cpp/include )
+include_directories(
+        src/main/cpp/sample
+        src/main/cpp/utils
+        src/main/cpp
+)
 
 #add_definitions(-DBUILD_OS_ANDROID)
+file(GLOB src-files
+        src/main/cpp/*.cpp
+        src/main/cpp/sample/*.cpp
+        src/main/cpp/utils/*.cpp
+        src/main/cpp/utils/ImageDef.h
+
+)
 
 add_library( # Sets the name of the library.
         native_lib
@@ -24,10 +35,7 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        src/main/cpp/utils/GLUtils.cpp
-        src/main/cpp/TriangleSample.cpp
-        src/main/cpp/native-lib.cpp
-        src/main/cpp/GLRenderContext.cpp)
+        ${src-files})
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

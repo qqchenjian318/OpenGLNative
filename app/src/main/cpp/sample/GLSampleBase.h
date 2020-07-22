@@ -3,11 +3,11 @@
 //
 
 #include "GLES3/gl3.h"
+#include "ImageDef.h"
 
 #ifndef MEDIASDKDEMO_GLSAMPLEBASE_H
 #define MEDIASDKDEMO_GLSAMPLEBASE_H
 
-#endif //MEDIASDKDEMO_GLSAMPLEBASE_H
 
 class GLSampleBase{
 
@@ -25,6 +25,8 @@ public:
 
     }
 
+    virtual void loadImage(NativeImage *pImage){};
+
     virtual void init() = 0;
 
     virtual void draw(int screenW,int screenH) = 0;
@@ -41,3 +43,6 @@ protected:
     int m_SurfaceWidth;
     int m_SurfaceHeight;
 };
+
+
+#endif //MEDIASDKDEMO_GLSAMPLEBASE_H

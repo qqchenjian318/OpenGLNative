@@ -2,14 +2,16 @@
 // Created by ChenJian on 2020/7/21.
 //
 
-#include "GLRenderContext.h"
+#include <ImageDef.h>
+#include <TextureMapSample.h>
 #include "GLES3/gl3.h"
 #include "common.h"
+#include "GLRenderContext.h"
 
 GLRenderContext* GLRenderContext::m_pContext  = nullptr;
 
 GLRenderContext::GLRenderContext() {
-    m_pCurSample = new TriangleSample();
+    m_pCurSample = new TextureMapSample();
     m_pBeforeSample = nullptr;
 }
 
@@ -22,6 +24,31 @@ GLRenderContext::~GLRenderContext() {
     if(m_pBeforeSample){
         delete m_pBeforeSample;
         m_pBeforeSample = nullptr;
+    }
+}
+
+void GLRenderContext::setImageData(int format, int width, int height, uint8_t *pData) {
+    LOGE("GLRenderContext::SetImageData format=%d, width=%d, height=%d, pData=%p", format, width, height, pData);
+    NativeImage nativeImage;
+    nativeImage.format = format;
+    nativeImage.width = width;
+    nativeImage.height = height;
+    nativeImage.ppPlane[0] = pData;
+
+    switch (format){
+        case IMAGE_FORMAT_NV12:
+        case IMAGE_FORMAT_NV21:
+            nativeImage.ppPlane[1] = nativeImage.ppPlane[0] + width * height;
+            break;
+        case IMAGE_FORMAT_I420:
+            nativeImage.ppPlane[1] = nativeImage.ppPlane[0] + width * height;
+            nativeImage.ppPlane[2] = nativeImage.ppPlane[1] + width * height / 4;
+            break;
+        default:
+            break;
+    }
+    if(m_pCurSample){
+        m_pCurSample->loadImage(&nativeImage);
     }
 }
 

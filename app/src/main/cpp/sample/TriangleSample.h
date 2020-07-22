@@ -5,6 +5,7 @@
 #ifndef MEDIASDKDEMO_TRIANGLESAMPLE_H
 #define MEDIASDKDEMO_TRIANGLESAMPLE_H
 
+
 #include "GLSampleBase.h"
 
 class TriangleSample : public GLSampleBase{
