@@ -24,7 +24,6 @@ file(GLOB src-files
         src/main/cpp/*.cpp
         src/main/cpp/sample/*.cpp
         src/main/cpp/utils/*.cpp
-        src/main/cpp/utils/ImageDef.h
 
 )
 

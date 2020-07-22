@@ -1,6 +1,6 @@
 //
 // Created by ChenJian on 2020/7/21.
-//加载图片数据
+// 加载rgba图片数据
 //
 
 #include <GLUtils.h>

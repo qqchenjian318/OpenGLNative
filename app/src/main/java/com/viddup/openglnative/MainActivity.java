@@ -11,6 +11,8 @@ import android.view.View;
 import com.viddup.openglnative.render.MyRender;
 import com.viddup.openglnative.render.NativeRender;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         surfaceView = findViewById(R.id.gl_view);
         nativeRender.nInit();
 //        nativeRender.setImageData();
-        loadImage();
+        loadNV21Image();
 
         surfaceView.setEGLContextClientVersion(3);
         surfaceView.setRenderer(new MyRender(nativeRender));
@@ -44,7 +46,37 @@ public class MainActivity extends AppCompatActivity {
         bitmap.copyPixelsToBuffer(buf);
         byte[] array = buf.array();
 
+
         nativeRender.setImageData(IMAGE_FORMAT_RGBA,bitmap.getWidth(),bitmap.getHeight(),array);
+    }
+
+    private void loadNV21Image(){
+        InputStream inputStream = null;
+        try {
+            inputStream = getAssets().open("YUV_Image_840x1074.NV21");
+
+            int length = 0;
+            try {
+                length = inputStream.available();
+                byte[] buffer = new byte[length];
+                inputStream.read(buffer);
+                nativeRender.setImageData(IMAGE_FORMAT_NV21,840,1074,buffer);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (inputStream != null){
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
     @Override

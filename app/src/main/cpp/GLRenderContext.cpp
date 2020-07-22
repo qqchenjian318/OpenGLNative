@@ -4,6 +4,7 @@
 
 #include <ImageDef.h>
 #include <TextureMapSample.h>
+#include <NV21TextureMapSample.h>
 #include "GLES3/gl3.h"
 #include "common.h"
 #include "GLRenderContext.h"
@@ -11,7 +12,7 @@
 GLRenderContext* GLRenderContext::m_pContext  = nullptr;
 
 GLRenderContext::GLRenderContext() {
-    m_pCurSample = new TextureMapSample();
+    m_pCurSample = new NV21TextureMapSample();
     m_pBeforeSample = nullptr;
 }
 
