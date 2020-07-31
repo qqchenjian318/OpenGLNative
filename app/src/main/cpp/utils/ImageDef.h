@@ -42,18 +42,22 @@ public:
         if (pImage->height == 0 || pImage->width == 0) return;
         switch (pImage->format) {
             case IMAGE_FORMAT_RGBA: {
+
+                LOGE("NativeImageUtil::AllocNativeImage pImage->format = IMAGE_FORMAT_RGBA");
                 pImage->ppPlane[0] = static_cast<uint8_t *>(malloc(
                         pImage->width * pImage->height * 4));
             }
                 break;
             case IMAGE_FORMAT_NV12:
             case IMAGE_FORMAT_NV21: {
+                LOGE("NativeImageUtil::AllocNativeImage pImage->format = IMAGE_FORMAT_NV12 | IMAGE_FORMAT_NV21");
                 pImage->ppPlane[0] = static_cast<uint8_t *>(malloc(
                         pImage->width * pImage->height * 1.5));
                 pImage->ppPlane[1] = pImage->ppPlane[0] + pImage->width * pImage->height;
             }
                 break;
             case IMAGE_FORMAT_I420: {
+                LOGE("NativeImageUtil::AllocNativeImage pImage->format = IMAGE_FORMAT_I420");
                 pImage->ppPlane[0] = static_cast<uint8_t *>(malloc(
                         pImage->width * pImage->height * 1.5));
                 pImage->ppPlane[1] = pImage->ppPlane[0] + pImage->width * pImage->height;

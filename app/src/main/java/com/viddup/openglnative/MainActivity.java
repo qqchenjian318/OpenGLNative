@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         surfaceView = findViewById(R.id.gl_view);
         nativeRender.nInit();
 //        nativeRender.setImageData();
-        loadNV21Image();
+        loadImage();
 
         surfaceView.setEGLContextClientVersion(3);
         surfaceView.setRenderer(new MyRender(nativeRender));
