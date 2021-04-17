@@ -8,8 +8,13 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.View;
 
+import com.viddup.openglnative.event.DrawEvent;
 import com.viddup.openglnative.render.MyRender;
 import com.viddup.openglnative.render.NativeRender;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
         surfaceView = findViewById(R.id.gl_view);
         nativeRender.nInit();
 //        nativeRender.setImageData();
@@ -35,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         surfaceView.setEGLContextClientVersion(3);
         surfaceView.setRenderer(new MyRender(nativeRender));
-
+        surfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        surfaceView.requestRender();
     }
 
     private void loadImage(){
@@ -76,12 +83,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
+    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(DrawEvent event){
+        surfaceView.requestRender();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         nativeRender.nUnInit();
+        EventBus.getDefault().unregister(this);
     }
 }

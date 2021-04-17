@@ -38,6 +38,9 @@ void FBOSample::loadImage(NativeImage *pImage) {
 }
 
 void FBOSample::init() {
+    if (m_FboProgramObj){
+        return;
+    }
     //顶点坐标
     GLfloat vVertices[] = {
             -1.0f, -1.0f, 0.0f,
@@ -105,7 +108,7 @@ void FBOSample::init() {
     m_ProgramObj = GLUtils::CreateProgram(vShaderStr, fShaderStr, m_VertexShader, m_FragmentShader);
 
     //编译链接用于离屏渲染的着色器程序
-    m_FboProgramObj = GLUtils::CreateProgram(vShaderStr, fFboShaderStr, m_FboVertexShader,
+    m_FboProgramObj = GLUtils::CreateProgram(vShaderStr, fShaderStr, m_FboVertexShader,
                                              m_FboFragmentShader);
 
     if (m_ProgramObj == GL_NONE || m_FboProgramObj == GL_NONE) {
@@ -217,6 +220,9 @@ void FBOSample::draw(int screenW, int screenH) {
     GO_CHECK_GL_ERROR();
     glBindTexture(GL_TEXTURE_2D, GL_NONE);
     glBindVertexArray(GL_NONE);
+
+//    glFinish();
+
 }
 
 void FBOSample::destroy() {

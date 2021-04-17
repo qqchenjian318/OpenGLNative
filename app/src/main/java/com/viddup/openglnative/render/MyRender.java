@@ -1,6 +1,11 @@
 package com.viddup.openglnative.render;
 
 import android.opengl.GLSurfaceView;
+import android.util.Log;
+
+import com.viddup.openglnative.event.DrawEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -33,8 +38,13 @@ public class MyRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
+        long start = System.currentTimeMillis();
         if (mRender != null){
             mRender.nDrawFrame();
         }
+        long end = System.currentTimeMillis();
+        Log.e("hero","  渲染耗时～～"+(end - start));
+        EventBus.getDefault().post(new DrawEvent());
+
     }
 }
